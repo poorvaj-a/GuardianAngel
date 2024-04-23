@@ -4,6 +4,7 @@ from pymongo import MongoClient
 import requests
 import random
 import time
+from pymongo.errors import BulkWriteError
 
 client = MongoClient('mongodb+srv://Developer:Bahubhashak@bahubhashaak-project.ascwu.mongodb.net/EMRI?retryWrites=true&w=majority')
 print("Connected successfully!!!")
@@ -83,7 +84,7 @@ def weather(response):
     parsed_json_data['eventId'] = generate_short_id()
     parsed_json_data['latitude'] = '17.5497'
     parsed_json_data['longitude'] = '78.1230'
-    parsed_json_data['Description'] = generate_description(parsed_json_data)
+    parsed_json_data['headline'] = generate_description(parsed_json_data)
     parsed_json_data['visited'] = False
     parsed_json_data['dampingFactor'] = 1
     parsed_json_data['upvotes'] = 0
@@ -93,9 +94,12 @@ def weather(response):
     parsed_json = json.dumps(parsed_json_data, indent=4)
 
 # Store in file
-    # with open('parsed_sensor_data0.json', 'w') as f:
-    #     f.write(parsed_json)
-    events.insert_one(parsed_data)
+    with open('parsed_sensor_data0.json', 'w') as f:
+        f.write(parsed_json)
+    existing_doc = events.find_one({'headline': parsed_json_data['headline']})
+    if existing_doc is None:
+        # If the headline does not exist, insert the document
+        events.insert_one(parsed_json_data)
     print("Data stored in 'parsed_sensor_data.json' file.")
 
 while(1):
@@ -127,7 +131,7 @@ while(1):
             parsed_data['eventId'] = generate_short_id()
             parsed_data['latitude'] = '17.5497'
             parsed_data['longitude'] = '78.1230'
-            parsed_data['Description'] = gen_description(parsed_data)
+            parsed_data['headline'] = gen_description(parsed_data)
             parsed_data['visited'] = False
             parsed_data['dampingFactor'] = 1
             parsed_data['upvotes'] = 0
@@ -137,10 +141,14 @@ while(1):
             parsed_json = json.dumps(parsed_data, indent=4)
 
             # Store in file
-            # filename = f"parsed_sensor_data_{index}.json"
-            # with open(filename, 'w') as f:
-            #     f.write(parsed_json)
-            events.insert_one(parsed_json)
+            filename = f"parsed_sensor_data_{index}.json"
+            with open(filename, 'w') as f:
+                f.write(parsed_json)
+
+            existing_doc = events.find_one({'headline': parsed_data['headline']})
+            if existing_doc is None:
+        # If the headline does not exist, insert the document
+                events.insert_one(parsed_data)
             # print(f"Data stored in '{filename}' file.")
 
         index += 1
