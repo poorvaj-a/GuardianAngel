@@ -105,7 +105,10 @@ def weather(response):
 while(1):
     for url in urls:
         response = requests.request("GET", url, headers=headers, data=payload)
-        data = json.loads(response.text)
+        try:
+            data = json.loads(response.text)
+        except json.JSONDecodeError as e:
+            pass
         
         if(data['m2m:cin']['lbl'][0] == "AE-WE"):
             weather(response.text)
