@@ -12,10 +12,10 @@ guardianAngel = client['GuardianAngel']
 events = guardianAngel['events']
 
 urls = {
-    "http://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-WE/WE-VN04-00/Data/la",
-    "http://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-AQ/AQ-KN00-00/Data/la",
-    "http://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-AQ/AQ-PL00-00/Data/la",
-    "http://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-AQ/AQ-MG00-00/Data/la"
+    "https://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-WE/WE-VN04-00/Data/la",
+    "https://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-AQ/AQ-KN00-00/Data/la",
+    "https://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-AQ/AQ-PL00-00/Data/la",
+    "https://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-AQ/AQ-MG00-00/Data/la"
 }
 # url = "http://onem2m.iiit.ac.in:443/~/in-cse/in-name/AE-WE/WE-VN04-00/Data/la"
 payload = {}
